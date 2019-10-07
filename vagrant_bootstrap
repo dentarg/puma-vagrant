@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -x # echo commands
+set -e # stop on errors
+
+rvm fix-permissions user
+
+gem install --no-document bundler
+
+ruby -v
+gem -v
+bundle -v
