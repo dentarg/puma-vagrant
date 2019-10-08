@@ -27,3 +27,16 @@ Bundle your app
 
     cd /vagrant/app
     bundle
+
+## HTTPS
+
+    brew install mkcert
+    brew install nss
+
+    # Only install for Firefox, avoids use of sudo
+    TRUST_STORES=nss mkcert -install
+
+    cd ssl_app
+    mkcert -cert-file puma_cert.pem -key-file puma_key.pem localhost 127.0.0.1 ::1
+
+    bundle exec puma -C ssl_config.rb
