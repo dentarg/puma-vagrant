@@ -33,10 +33,14 @@ Bundle your app
     brew install mkcert
     brew install nss
 
-    # Only install for Firefox, avoids use of sudo
+    mkcert -install
+
+    # Only install for Firefox, if you want to avoid use of sudo
     TRUST_STORES=nss mkcert -install
 
     cd ssl_app
     mkcert -cert-file puma_cert.pem -key-file puma_key.pem localhost 127.0.0.1 ::1
 
     bundle exec puma -C ssl_config.rb
+
+Open [https://localhost:9292/](https://localhost:9292/) or [https://127.0.0.1:9292/](https://127.0.0.1:9292/).
