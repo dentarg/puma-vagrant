@@ -5,3 +5,5 @@ source "https://rubygems.org"
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem "puma"
+# https://github.com/puma/puma/issues/2115
+# gem 'puma', git: 'https://github.com/MSP-Greg/puma', branch: 'ssl-vers'
