@@ -44,3 +44,19 @@ Bundle your app
     bundle exec puma -C ssl_config.rb
 
 Open [https://localhost:9292/](https://localhost:9292/) or [https://127.0.0.1:9292/](https://127.0.0.1:9292/).
+
+## OpenBSD
+
+```
+vagrant up openbsd
+vagrant ssh openbsd
+
+cd /vagrant/app
+bundle
+sudo puma --log-requests --bind tcp://127.0.0.1 --config config.rb --control-url unix:///var/www/run/puma.sock
+
+sudo cp /vagrant/httpd.conf /etc/httpd.conf
+sudo rcctl enable httpd
+sudo rcctl start httpd
+ftp -o - http://127.0.0.1
+```

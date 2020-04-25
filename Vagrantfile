@@ -23,11 +23,24 @@ echo "Installing gem dependencies for: pg"
 sudo apt-get install -y libpq-dev
 SCRIPT
 
+$openbsd_provision = <<SCRIPT
+  sudo pkg_add ruby-#{ruby_version} vim--no_x11
+  sudo ln -sf /usr/local/bin/ruby26 /usr/local/bin/ruby
+  sudo ln -sf /usr/local/bin/erb26 /usr/local/bin/erb
+  sudo ln -sf /usr/local/bin/irb26 /usr/local/bin/irb
+  sudo ln -sf /usr/local/bin/rdoc26 /usr/local/bin/rdoc
+  sudo ln -sf /usr/local/bin/ri26 /usr/local/bin/ri
+  sudo ln -sf /usr/local/bin/rake26 /usr/local/bin/rake
+  sudo ln -sf /usr/local/bin/gem26 /usr/local/bin/gem
+  sudo ln -sf /usr/local/bin/bundle26 /usr/local/bin/bundle
+  sudo ln -sf /usr/local/bin/bundler26 /usr/local/bin/bundler
+SCRIPT
+
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
   config.ssh.forward_agent = true
 
-  config.vm.define "puma" do |ubuntu|
+  config.vm.define "ubuntu" do |ubuntu|
     ubuntu.vm.box = "ubuntu/bionic64"
     ubuntu.vm.hostname = "puma"
     ubuntu.vm.provision "shell", inline: $provision
@@ -41,5 +54,13 @@ Vagrant.configure(2) do |config|
       # from https://groups.google.com/forum/#!topic/vagrant-up/eZljy-bddoI
       vbox.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
     end
+  end
+
+  config.vm.define "openbsd" do |openbsd|
+    openbsd.vm.box = "twingly/openbsd-6.6-amd64"
+    openbsd.vm.hostname = "openbsd"
+    openbsd.vm.provision "shell", inline: $openbsd_provision
+    openbsd.vm.synced_folder "./", "/vagrant", disabled: false
+    openbsd.vm.network :forwarded_port, host: 5001, guest: 5001
   end
 end
