@@ -24,7 +24,7 @@ sudo apt-get install -y libpq-dev
 SCRIPT
 
 $openbsd_provision = <<SCRIPT
-  sudo pkg_add ruby-#{ruby_version} vim--no_x11
+  sudo pkg_add ruby-#{ruby_version} vim--no_x11 curl
   sudo ln -sf /usr/local/bin/ruby26 /usr/local/bin/ruby
   sudo ln -sf /usr/local/bin/erb26 /usr/local/bin/erb
   sudo ln -sf /usr/local/bin/irb26 /usr/local/bin/irb
@@ -62,5 +62,6 @@ Vagrant.configure(2) do |config|
     openbsd.vm.provision "shell", inline: $openbsd_provision
     openbsd.vm.synced_folder "./", "/vagrant", disabled: false
     openbsd.vm.network :forwarded_port, host: 5001, guest: 5001
+    openbsd.vm.network :forwarded_port, host: 8080, guest: 80
   end
 end

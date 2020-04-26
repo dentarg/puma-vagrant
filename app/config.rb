@@ -1,4 +1,5 @@
 workers 1
 app do |env|
-  [200, {}, ["embedded app"]]
+  foo = "foo"
+  [200, {}, ["embedded #{foo*99} app\n"]]
 end

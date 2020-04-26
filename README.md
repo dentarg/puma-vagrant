@@ -51,12 +51,19 @@ Open [https://localhost:9292/](https://localhost:9292/) or [https://127.0.0.1:92
 vagrant up openbsd
 vagrant ssh openbsd
 
+# In OpenBSD
 cd /vagrant/app
 bundle
-sudo puma --log-requests --bind tcp://127.0.0.1 --config config.rb --control-url unix:///var/www/run/puma.sock
+sudo puma --log-requests --bind tcp://127.0.0.1:5001 --config config.rb --control-url unix:///var/www/run/puma.sock
 
 sudo cp /vagrant/httpd.conf /etc/httpd.conf
 sudo rcctl enable httpd
 sudo rcctl start httpd
-ftp -o - http://127.0.0.1
+ftp -d -v -o - http://127.0.0.1
+
+sudo cp /vagrant/relayd.conf /etc/relayd.conf
+sudo rcctl enable relayd
+sudo rcctl start relayd
+ftp -d -v -o - http://127.0.0.1
+curl -s -v 127.0.0.1
 ```
