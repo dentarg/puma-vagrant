@@ -1,0 +1,20 @@
+GIT
+  remote: https://github.com/puma/puma
+  revision: 6234e4b057ffa1f3ba822dafb9185404db2fdd47
+  specs:
+    puma (4.3.3)
+      nio4r (~> 2.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    nio4r (2.5.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  puma!
+
+BUNDLED WITH
+   1.17.3
