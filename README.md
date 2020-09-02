@@ -4,6 +4,7 @@ Setup on macOS with [Homebrew](https://brew.sh/)
 
     brew cask install virtualbox
     brew cask install vagrant
+    vagrant plugin install dotenv
 
 Start the machine
 
@@ -67,3 +68,10 @@ sudo rcctl start relayd
 ftp -d -v -o - http://127.0.0.1
 curl -s -v 127.0.0.1
 ```
+
+## JRuby
+
+    echo "PUMA_SRC_DIR=<path to directory with puma>" >> .env.vagrant
+    vagrant up jruby-ubuntu
+    vagrant ssh
+    cp -r /vagrant/ ~/puma && cd ~/puma && bundle && bundle e rake compile && bundle e rake test:all
