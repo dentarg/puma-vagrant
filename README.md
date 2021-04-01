@@ -46,9 +46,24 @@ Bundle your app
 
 Open [https://localhost:9292/](https://localhost:9292/) or [https://127.0.0.1:9292/](https://127.0.0.1:9292/).
 
+## FreeBSD
+
+Currently broken: https://github.com/puma/puma/issues/2556
+
+```bash
+vagrant up freebsd
+vagrant ssh freebsd
+
+# In FreeBSD
+cd /vagrant/app
+rm Gemfile.lock
+/usr/home/vagrant/.gem/ruby/2.7/bin/bundle
+/usr/home/vagrant/.gem/ruby/2.7/bin/bundle exec puma --config config.rb -p 5002
+```
+
 ## OpenBSD
 
-```
+```bash
 vagrant up openbsd
 vagrant ssh openbsd
 

@@ -68,6 +68,10 @@ echo "adjust permissions of a few directories for running 'gem install' as an ar
 mkdir -p #{gem_home} && chmod 777 #{gem_home}
 SCRIPT
 
+$freebsd_provision = <<SCRIPT
+sudo pkg install -y -r FreeBSD devel/ruby-gems
+SCRIPT
+
 $openbsd_provision = <<SCRIPT
   sudo pkg_add ruby-#{ruby_version} vim--no_x11 curl
   sudo ln -sf /usr/local/bin/ruby26 /usr/local/bin/ruby
@@ -116,6 +120,14 @@ Vagrant.configure(2) do |config|
       vbox.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
       vbox.memory = 2048
     end
+  end
+
+  config.vm.define "freebsd" do |freebsd|
+    freebsd.vm.box = "bento/freebsd-12.2"
+    freebsd.vm.hostname = "freebsd"
+    freebsd.vm.provision "shell", inline: $freebsd_provision
+    freebsd.vm.synced_folder "./", "/vagrant", disabled: false
+    freebsd.vm.network :forwarded_port, host: 5002, guest: 5002
   end
 
   config.vm.define "openbsd" do |openbsd|
