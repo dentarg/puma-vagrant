@@ -55,10 +55,19 @@ vagrant up freebsd
 vagrant ssh freebsd
 
 # In FreeBSD
+export PATH=$PATH:/usr/home/vagrant/.gem/ruby/2.7/bin
+gem install --user bundler
 cd /vagrant/app
 rm Gemfile.lock
-/usr/home/vagrant/.gem/ruby/2.7/bin/bundle
-/usr/home/vagrant/.gem/ruby/2.7/bin/bundle exec puma --config config.rb -p 5002
+bundle
+bundle exec puma --config config.rb -p 5002
+
+# To run Puma tests
+sudo pkg install -y -r FreeBSD git devel/ragel
+git clone https://github.com/puma/puma.git
+cd puma
+bundle
+bundle exec rake
 ```
 
 ## OpenBSD
